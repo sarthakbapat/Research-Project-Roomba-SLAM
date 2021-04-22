@@ -1,0 +1,281 @@
+amcl: {base_frame_id: base_link, beam_skip_distance: 0.5, beam_skip_threshold: 0.3,
+  do_beamskip: false, first_map_only: false, global_frame_id: map, gui_publish_rate: 10.0,
+  initial_cov_aa: 0.007105515804348797, initial_cov_xx: 0.06269521250595034, initial_cov_yy: 0.16754949888937226,
+  initial_pose_a: -0.006258091344294921, initial_pose_x: 6.4671176953563165, initial_pose_y: 0.3056835798956026,
+  kld_err: 0.05, kld_z: 0.99, laser_lambda_short: 0.1, laser_likelihood_max_dist: 2.0,
+  laser_max_beams: 30, laser_max_range: -1.0, laser_min_range: -1.0, laser_model_type: likelihood_field,
+  laser_sigma_hit: 0.2, laser_z_hit: 0.5, laser_z_max: 0.05, laser_z_rand: 0.5, laser_z_short: 0.05,
+  max_particles: 5000, min_particles: 500, odom_alpha1: 0.2, odom_alpha2: 0.2, odom_alpha3: 0.8,
+  odom_alpha4: 0.2, odom_alpha5: 0.1, odom_frame_id: odom, odom_model_type: omni,
+  recovery_alpha_fast: 0.0, recovery_alpha_slow: 0.0, resample_interval: 1, restore_defaults: false,
+  save_pose_rate: 0.5, tf_broadcast: true, transform_tolerance: 0.1, update_min_a: 0.5,
+  update_min_d: 0.2, use_map_topic: false}
+ca_driver: {base_frame: base_footprint, dev: /dev/ttyUSB0, latch_cmd_duration: 0.2,
+  loop_hz: 10.0, odom_frame: odom, publish_tf: true, robot_model: CREATE_2}
+move_base:
+  DWAPlannerROS: {acc_lim_th: 3.2, acc_lim_theta: 3.2, acc_lim_trans: 0.1, acc_lim_x: 2.5,
+    acc_lim_y: 2.5, angular_sim_granularity: 0.1, forward_point_distance: 0.325, goal_distance_bias: 20.0,
+    latch_xy_goal_tolerance: false, max_rot_vel: 1.0, max_scaling_factor: 0.2, max_vel_theta: 1.0,
+    max_vel_trans: 0.45, max_vel_x: 0.45, max_vel_y: 0.1, min_rot_vel: 0.4, min_vel_theta: 0.4,
+    min_vel_trans: 0.1, min_vel_x: 0.1, min_vel_y: -0.1, occdist_scale: 0.02, oscillation_reset_angle: 0.2,
+    oscillation_reset_dist: 0.05, path_distance_bias: 25.0, prune_plan: false, publish_cost_grid: false,
+    restore_defaults: false, scaling_speed: 0.25, sim_granularity: 0.025, sim_time: 2.5,
+    stop_time_buffer: 0.2, theta_stopped_vel: 0.1, trans_stopped_vel: 0.1, twirling_scale: 0.0,
+    use_dwa: true, vth_samples: 20, vx_samples: 8, vy_samples: 10, xy_goal_tolerance: 0.1,
+    yaw_goal_tolerance: 0.05}
+  GlobalPlanner: {allow_unknown: true, cost_factor: 0.55, default_tolerance: 0.0,
+    lethal_cost: 253, neutral_cost: 66, old_navfn_behaviour: false, orientation_mode: 0,
+    orientation_window_size: 1, outline_map: true, publish_potential: true, use_dijkstra: true,
+    use_grid_path: false, use_quadratic: true, visualize_potential: true}
+  aggressive_reset: {reset_distance: 1.84}
+  base_global_planner: global_planner/GlobalPlanner
+  base_local_planner: dwa_local_planner/DWAPlannerROS
+  clearing_rotation_allowed: true
+  conservative_reset: {reset_distance: 3.0}
+  conservative_reset_dist: 3.0
+  controller_frequency: 20.0
+  controller_patience: 5.0
+  global_costmap:
+    footprint: '[]'
+    footprint_padding: 0.01
+    global_frame: map
+    height: 100
+    inflation_layer: {cost_scaling_factor: 10.0, enabled: true, inflate_unknown: false,
+      inflation_radius: 1.0}
+    inflation_radius: 1.0
+    laser_scan_sensor: {clearing: true, data_type: LaserScan, marking: true, sensor_frame: laser_frame,
+      topic: scan}
+    observation_sources: laser_scan_sensor
+    obstacle_layer: {combination_method: 1, enabled: true, footprint_clearing_enabled: true,
+      max_obstacle_height: 2.0, obstacle_range: 0.1, raytrace_range: 2.0}
+    obstacle_range: 0.1
+    origin_x: 0.0
+    origin_y: 0.0
+    plugins:
+    - {name: inflation_layer, output: screen, type: 'costmap_2d::InflationLayer'}
+    - {name: obstacle_layer, output: screen, type: 'costmap_2d::ObstacleLayer'}
+    publish_frequency: 0.0
+    raytrace_range: 2.0
+    resolution: 0.05
+    robot_base_frame: base_link
+    robot_radius: 0.1
+    static_map: true
+    transform_tolerance: 0.4
+    update_frequency: 20.0
+    width: 100
+  local_costmap:
+    footprint: '[]'
+    footprint_padding: 0.01
+    global_frame: odom
+    height: 30
+    inflation_layer: {cost_scaling_factor: 10.0, enabled: true, inflate_unknown: false,
+      inflation_radius: 1.0}
+    inflation_radius: 1.0
+    laser_scan_sensor: {clearing: true, data_type: LaserScan, marking: true, sensor_frame: laser_frame,
+      topic: scan}
+    observation_sources: laser_scan_sensor
+    obstacle_layer: {combination_method: 1, enabled: true, footprint_clearing_enabled: true,
+      max_obstacle_height: 2.0, obstacle_range: 0.1, raytrace_range: 2.0}
+    obstacle_range: 0.1
+    origin_x: 0.0
+    origin_y: 0.0
+    plugins:
+    - {name: inflation_layer, output: screen, type: 'costmap_2d::InflationLayer'}
+    - {name: obstacle_layer, output: screen, type: 'costmap_2d::ObstacleLayer'}
+    publish_frequency: 20.0
+    raytrace_range: 2.0
+    resolution: 0.05
+    robot_base_frame: base_link
+    robot_radius: 0.1
+    rolling_window: true
+    static_map: false
+    transform_tolerance: 0.4
+    update_frequency: 20.0
+    width: 30
+  max_planning_retries: -1
+  oscillation_distance: 0.5
+  oscillation_timeout: 0.0
+  planner_frequency: 0.0
+  planner_patience: 5.0
+  recovery_behavior_enabled: true
+  restore_defaults: false
+  shutdown_costmaps: false
+robot_description: "<?xml version=\"1.0\" ?>\n<!-- ===================================================================================\
+  \ -->\n<!-- |    This document was autogenerated by xacro from /home/ubuntu/catkin_ws/src/create_autonomy/ca_description/urdf/create_2.urdf.xacro\
+  \ | -->\n<!-- |    EDITING THIS FILE BY HAND IS NOT RECOMMENDED                \
+  \                 | -->\n<!-- ===================================================================================\
+  \ -->\n<robot name=\"create_2\" xmlns:xacro=\"http://ros.org/wiki/xacro\">\n  <link\
+  \ name=\"base_footprint\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0\
+  \ 0\"/>\n      <geometry>\n        <box size=\"0.001 0.001 0.001\"/>\n      </geometry>\n\
+  \      <material name=\"Green\"/>\n    </visual>\n    <collision>\n      <origin\
+  \ rpy=\"0 0 0\" xyz=\"0 0 0.017\"/>\n      <geometry>\n        <box size=\"0.001\
+  \ 0.001 0.001\"/>\n      </geometry>\n    </collision>\n  </link>\n  <link name=\"\
+  base_link\">\n    <inertial>\n      <mass value=\"2\"/>\n      <origin xyz=\"0 0\
+  \ 0.0\"/>\n      <inertia ixx=\"0.01\" ixy=\"0.0\" ixz=\"0.0\" iyy=\"0.01\" iyz=\"\
+  0.0\" izz=\"0.5\"/>\n    </inertial>\n    <visual>\n      <origin rpy=\"0 0 0\"\
+  \ xyz=\" 0 0 0.0308\"/>\n      <geometry>\n        <mesh filename=\"package://ca_description/meshes/create_2.dae\"\
+  />\n      </geometry>\n    </visual>\n    <collision>\n      <origin rpy=\"0 0 0\"\
+  \ xyz=\"0.0 0.0 0.0308\"/>\n      <geometry>\n        <cylinder length=\"0.0611632\"\
+  \ radius=\"0.16495\"/>\n      </geometry>\n    </collision>\n  </link>\n  <link\
+  \ name=\"wall_sensor_link\">\n    <inertial>\n      <mass value=\"0.01\"/>\n   \
+  \   <origin xyz=\"0 0 0\"/>\n      <inertia ixx=\"0.001\" ixy=\"0.0\" ixz=\"0.0\"\
+  \ iyy=\"0.001\" iyz=\"0.0\" izz=\"0.001\"/>\n    </inertial>\n  </link>\n  <link\
+  \ name=\"left_cliff_sensor_link\">\n    <inertial>\n      <mass value=\"0.01\"/>\n\
+  \      <origin xyz=\"0 0 0\"/>\n      <inertia ixx=\"0.001\" ixy=\"0.0\" ixz=\"\
+  0.0\" iyy=\"0.001\" iyz=\"0.0\" izz=\"0.001\"/>\n    </inertial>\n  </link>\n  <link\
+  \ name=\"right_cliff_sensor_link\">\n    <inertial>\n      <mass value=\"0.01\"\
+  />\n      <origin xyz=\"0 0 0\"/>\n      <inertia ixx=\"0.001\" ixy=\"0.0\" ixz=\"\
+  0.0\" iyy=\"0.001\" iyz=\"0.0\" izz=\"0.001\"/>\n    </inertial>\n  </link>\n  <link\
+  \ name=\"leftfront_cliff_sensor_link\">\n    <inertial>\n      <mass value=\"0.01\"\
+  />\n      <origin xyz=\"0 0 0\"/>\n      <inertia ixx=\"1.0\" ixy=\"0.0\" ixz=\"\
+  0.0\" iyy=\"0.01\" iyz=\"0.0\" izz=\"0.01\"/>\n    </inertial>\n  </link>\n  <link\
+  \ name=\"rightfront_cliff_sensor_link\">\n    <inertial>\n      <mass value=\"0.01\"\
+  />\n      <origin xyz=\"0 0 0\"/>\n      <inertia ixx=\"0.001\" ixy=\"0.0\" ixz=\"\
+  0.0\" iyy=\"0.001\" iyz=\"0.0\" izz=\"0.001\"/>\n    </inertial>\n  </link>\n  <joint\
+  \ name=\"base_footprint_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 0\" xyz=\"\
+  0 0 0.017\"/>\n    <parent link=\"base_footprint\"/>\n    <child link=\"base_link\"\
+  />\n  </joint>\n  <joint name=\"base_wall_sensor_joint\" type=\"fixed\">\n    <origin\
+  \ rpy=\"0 0 -1.0\" xyz=\"0.09 -0.120 0.042\"/>\n    <parent link=\"base_link\"/>\n\
+  \    <child link=\"wall_sensor_link\"/>\n  </joint>\n  <joint name=\"base_left_cliff_sensor_joint\"\
+  \ type=\"fixed\">\n    <origin rpy=\"0 1.57079632679 0\" xyz=\"0.07 0.14 0.01\"\
+  />\n    <parent link=\"base_link\"/>\n    <child link=\"left_cliff_sensor_link\"\
+  />\n  </joint>\n  <joint name=\"base_right_cliff_sensor_joint\" type=\"fixed\">\n\
+  \    <origin rpy=\"0 1.57079632679 0\" xyz=\"0.07 -0.14 0.01\"/>\n    <parent link=\"\
+  base_link\"/>\n    <child link=\"right_cliff_sensor_link\"/>\n  </joint>\n  <joint\
+  \ name=\"base_leftfront_cliff_sensor_joint\" type=\"fixed\">\n    <origin rpy=\"\
+  0 1.57079632679 0\" xyz=\"0.15 0.04 0.01\"/>\n    <parent link=\"base_link\"/>\n\
+  \    <child link=\"leftfront_cliff_sensor_link\"/>\n  </joint>\n  <joint name=\"\
+  base_rightfront_cliff_sensor_joint\" type=\"fixed\">\n    <origin rpy=\"0 1.57079632679\
+  \ 0\" xyz=\"0.15 -0.04 0.01\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"\
+  rightfront_cliff_sensor_link\"/>\n  </joint>\n  <link name=\"left_wheel_link\">\n\
+  \    <inertial>\n      <origin xyz=\"0 0 0\"/>\n      <mass value=\"0.01\"/>\n \
+  \     <inertia ixx=\"0.001\" ixy=\"0.0\" ixz=\"0.0\" iyy=\"0.001\" iyz=\"0.0\" izz=\"\
+  0.001\"/>\n    </inertial>\n    <visual>\n      <origin rpy=\"0 1.57079632679 1.57079632679\"\
+  \ xyz=\"0 0 0\"/>\n      <geometry>\n        <cylinder length=\"0.024\" radius=\"\
+  0.036\"/>\n      </geometry>\n    </visual>\n    <collision>\n      <origin rpy=\"\
+  0 1.57079632679 1.57079632679\" xyz=\"0 0 0\"/>\n      <geometry>\n        <cylinder\
+  \ length=\"0.024\" radius=\"0.036\"/>\n      </geometry>\n    </collision>\n  </link>\n\
+  \  <joint name=\"left_wheel_joint\" type=\"continuous\">\n    <origin rpy=\"0 0\
+  \ 0\" xyz=\"0 0.1175 0.015\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"\
+  left_wheel_link\"/>\n    <axis xyz=\"0 1 0\"/>\n  </joint>\n  <link name=\"right_wheel_link\"\
+  >\n    <inertial>\n      <origin xyz=\"0 0 0\"/>\n      <mass value=\"0.01\"/>\n\
+  \      <inertia ixx=\"0.001\" ixy=\"0.0\" ixz=\"0.0\" iyy=\"0.001\" iyz=\"0.0\"\
+  \ izz=\"0.001\"/>\n    </inertial>\n    <visual>\n      <origin rpy=\"0 1.57079632679\
+  \ 1.57079632679\" xyz=\"0 0 0\"/>\n      <geometry>\n        <cylinder length=\"\
+  0.024\" radius=\"0.036\"/>\n      </geometry>\n    </visual>\n    <collision>\n\
+  \      <origin rpy=\"0 1.57079632679 1.57079632679\" xyz=\"0 0 0\"/>\n      <geometry>\n\
+  \        <cylinder length=\"0.024\" radius=\"0.036\"/>\n      </geometry>\n    </collision>\n\
+  \  </link>\n  <joint name=\"right_wheel_joint\" type=\"continuous\">\n    <origin\
+  \ rpy=\"0 0 0\" xyz=\"0 -0.1175 0.015\"/>\n    <parent link=\"base_link\"/>\n  \
+  \  <child link=\"right_wheel_link\"/>\n    <axis xyz=\"0 1 0\"/>\n  </joint>\n \
+  \ <!--<link name=\"rear_wheel_link\">\n    <inertial>\n      <origin xyz=\"0 0 0\"\
+  />\n      <mass value=\"0.001\" />\n      <inertia ixx=\"0.0001\" ixy=\"0.0\" ixz=\"\
+  0.0\"\n        iyy=\"0.0001\" iyz=\"0.0\" izz=\"0.0001\" />\n    </inertial>\n\n\
+  \    <visual>\n      <origin xyz=\"0 0 0\" rpy=\"0 ${PI/2} ${PI/2}\"/>\n      <geometry>\n\
+  \        <sphere radius=\"0.015\" />\n      </geometry>\n    </visual>\n\n    <collision>\n\
+  \      <origin xyz=\"0 0 0\" rpy=\"0 ${PI/2} ${PI/2}\" />\n      <geometry>\n  \
+  \      <sphere radius=\"0.015\" />\n      </geometry>\n    </collision>\n    </link>\n\
+  \    <joint name=\"rear_castor_joint\" type=\"fixed\">\n      <origin xyz=\"-0.13\
+  \ 0 0.0\" rpy=\"0 0 0\"/>\n      <parent link=\"base_link\"/>\n      <child link=\"\
+  rear_wheel_link\"/>\n      <axis xyz=\"0 1 0\"/>\n    </joint>-->\n  <link name=\"\
+  front_wheel_link\">\n    <inertial>\n      <origin xyz=\"0 0 0\"/>\n      <mass\
+  \ value=\"0.01\"/>\n      <inertia ixx=\"0.001\" ixy=\"0.0\" ixz=\"0.0\" iyy=\"\
+  0.001\" iyz=\"0.0\" izz=\"0.001\"/>\n    </inertial>\n    <visual>\n      <origin\
+  \ rpy=\"0 1.57079632679 1.57079632679\" xyz=\"0 0 0\"/>\n      <geometry>\n    \
+  \    <sphere radius=\"0.018\"/>\n      </geometry>\n    </visual>\n    <collision>\n\
+  \      <origin rpy=\"0 1.57079632679 1.57079632679\" xyz=\"0 0 0\"/>\n      <geometry>\n\
+  \        <sphere radius=\"0.018\"/>\n      </geometry>\n    </collision>\n  </link>\n\
+  \  <!-- fixed because there's no transmission -->\n  <joint name=\"front_castor_joint\"\
+  \ type=\"fixed\">\n    <origin rpy=\"0 0 0\" xyz=\"0.13 0 0.0\"/>\n    <parent link=\"\
+  base_link\"/>\n    <child link=\"front_wheel_link\"/>\n    <axis xyz=\"0 1 0\"/>\n\
+  \  </joint>\n  <joint name=\"gyro_joint\" type=\"fixed\">\n    <axis xyz=\"0 1 0\"\
+  />\n    <origin rpy=\"0 0 0\" xyz=\"0 0 0.04\"/>\n    <parent link=\"base_link\"\
+  />\n    <child link=\"gyro_link\"/>\n  </joint>\n  <link name=\"gyro_link\">\n \
+  \   <inertial>\n      <mass value=\"0.001\"/>\n      <origin rpy=\"0 0 0\" xyz=\"\
+  0 0 0\"/>\n      <inertia ixx=\"0.0001\" ixy=\"0\" ixz=\"0\" iyy=\"0.000001\" iyz=\"\
+  0\" izz=\"0.0001\"/>\n    </inertial>\n  </link>\n  <gazebo>\n    <plugin filename=\"\
+  libgazebo_ros_diff_drive.so\" name=\"differential_drive_controller\">\n      <alwaysOn>true</alwaysOn>\n\
+  \      <updateRate>40</updateRate>\n      <leftJoint>right_wheel_joint</leftJoint>\n\
+  \      <rightJoint>left_wheel_joint</rightJoint>\n      <wheelSeparation>0.235</wheelSeparation>\n\
+  \      <wheelDiameter>0.072</wheelDiameter>\n      <wheelTorque>1.0</wheelTorque>\n\
+  \      <!--wheelAcceleration>${wheel_accel}</wheelAcceleration-->\n      <commandTopic>cmd_vel</commandTopic>\n\
+  \      <odometryTopic>odom</odometryTopic>\n      <odometryFrame>odom</odometryFrame>\n\
+  \      <robotBaseFrame>base_footprint</robotBaseFrame>\n    </plugin>\n    <plugin\
+  \ filename=\"libgazebo_ros_p3d.so\" name=\"p3d_base_controller\">\n      <alwaysOn>true</alwaysOn>\n\
+  \      <updateRate>100.0</updateRate>\n      <bodyName>base_link</bodyName>\n  \
+  \    <topicName>simple_controller/absolute_position</topicName>\n      <gaussianNoise>0</gaussianNoise>\n\
+  \      <frameName>map</frameName>\n      <xyzOffsets>0 0 0</xyzOffsets>\n      <rpyOffsets>0\
+  \ 0 0</rpyOffsets>\n      <!--<interface:position name=\"p3d_base_position\"/>-->\n\
+  \    </plugin>\n  </gazebo>\n  <gazebo reference=\"left_wheel_link\">\n    <mu1>1.0</mu1>\n\
+  \    <mu2>1.0</mu2>\n    <kp>1000000.0</kp>\n    <kd>100.0</kd>\n    <minDepth>0.001</minDepth>\n\
+  \    <maxVel>1.0</maxVel>\n  </gazebo>\n  <gazebo reference=\"right_wheel_link\"\
+  >\n    <mu1>1.0</mu1>\n    <mu2>1.0</mu2>\n    <kp>1000000.0</kp>\n    <kd>100.0</kd>\n\
+  \    <minDepth>0.001</minDepth>\n    <maxVel>1.0</maxVel>\n  </gazebo>\n  <gazebo\
+  \ reference=\"rear_wheel_link\">\n    <mu1>0.0</mu1>\n    <mu2>0.0</mu2>\n    <kp>1000000.0</kp>\n\
+  \    <kd>100.0</kd>\n    <minDepth>0.001</minDepth>\n    <maxVel>1.0</maxVel>\n\
+  \  </gazebo>\n  <gazebo reference=\"front_wheel_link\">\n    <mu1>0.0</mu1>\n  \
+  \  <mu2>0.0</mu2>\n    <kp>1000000.0</kp>\n    <kd>100.0</kd>\n    <minDepth>0.001</minDepth>\n\
+  \    <maxVel>1.0</maxVel>\n  </gazebo>\n  <gazebo reference=\"wall_sensor_link\"\
+  >\n    <sensor name=\"wall_sensor\" type=\"ray\">\n      <always_on>true</always_on>\n\
+  \      <update_rate>20.0</update_rate>\n      <pose>0 0 0 0 0 0</pose>\n      <visualize>false</visualize>\n\
+  \      <ray>\n        <scan>\n          <horizontal>\n            <samples>1</samples>\n\
+  \            <resolution>1</resolution>\n            <min_angle>0</min_angle>\n\
+  \            <max_angle>0</max_angle>\n          </horizontal>\n        </scan>\n\
+  \        <range>\n          <min>0.0160</min>\n          <max>0.04</max>\n     \
+  \     <resolution>0.1</resolution>\n        </range>\n      </ray>\n    </sensor>\n\
+  \  </gazebo>\n  <gazebo reference=\"left_cliff_sensor_link\">\n    <sensor name=\"\
+  left_cliff_sensor\" type=\"ray\">\n      <always_on>true</always_on>\n      <update_rate>20.0</update_rate>\n\
+  \      <pose>0 0 0 0 0 0</pose>\n      <visualize>false</visualize>\n      <ray>\n\
+  \        <scan>\n          <horizontal>\n            <samples>1</samples>\n    \
+  \        <resolution>1</resolution>\n            <min_angle>0</min_angle>\n    \
+  \        <max_angle>0</max_angle>\n          </horizontal>\n        </scan>\n  \
+  \      <range>\n          <min>0.01</min>\n          <max>0.04</max>\n         \
+  \ <resolution>0.1</resolution>\n        </range>\n      </ray>\n    </sensor>\n\
+  \  </gazebo>\n  <gazebo reference=\"right_cliff_sensor_link\">\n    <sensor name=\"\
+  right_cliff_sensor\" type=\"ray\">\n      <always_on>true</always_on>\n      <update_rate>20.0</update_rate>\n\
+  \      <pose>0 0 0 0 0 0</pose>\n      <visualize>false</visualize>\n      <ray>\n\
+  \        <scan>\n          <horizontal>\n            <samples>1</samples>\n    \
+  \        <resolution>1</resolution>\n            <min_angle>0</min_angle>\n    \
+  \        <max_angle>0</max_angle>\n          </horizontal>\n        </scan>\n  \
+  \      <range>\n          <min>0.01</min>\n          <max>0.04</max>\n         \
+  \ <resolution>0.1</resolution>\n        </range>\n      </ray>\n    </sensor>\n\
+  \  </gazebo>\n  <gazebo reference=\"leftfront_cliff_sensor_link\">\n    <sensor\
+  \ name=\"leftfront_cliff_sensor\" type=\"ray\">\n      <always_on>true</always_on>\n\
+  \      <update_rate>20.0</update_rate>\n      <pose>0 0 0 0 0 0</pose>\n      <visualize>false</visualize>\n\
+  \      <ray>\n        <scan>\n          <horizontal>\n            <samples>1</samples>\n\
+  \            <resolution>1</resolution>\n            <min_angle>0</min_angle>\n\
+  \            <max_angle>0</max_angle>\n          </horizontal>\n        </scan>\n\
+  \        <range>\n          <min>0.01</min>\n          <max>0.04</max>\n       \
+  \   <resolution>0.1</resolution>\n        </range>\n      </ray>\n    </sensor>\n\
+  \  </gazebo>\n  <gazebo reference=\"rightfront_cliff_sensor_link\">\n    <sensor\
+  \ name=\"rightfront_cliff_sensor\" type=\"ray\">\n      <always_on>true</always_on>\n\
+  \      <update_rate>20.0</update_rate>\n      <pose>0 0 0 0 0 0</pose>\n      <visualize>false</visualize>\n\
+  \      <ray>\n        <scan>\n          <horizontal>\n            <samples>1</samples>\n\
+  \            <resolution>1</resolution>\n            <min_angle>0</min_angle>\n\
+  \            <max_angle>0</max_angle>\n          </horizontal>\n        </scan>\n\
+  \        <range>\n          <min>0.01</min>\n          <max>0.04</max>\n       \
+  \   <resolution>0.1</resolution>\n        </range>\n      </ray>\n    </sensor>\n\
+  \  </gazebo>\n  <gazebo>\n    <plugin filename=\"libgazebo_ros_imu.so\" name=\"\
+  imu_controller\">\n      <alwaysOn>true</alwaysOn>\n      <updateRate>30</updateRate>\n\
+  \      <bodyName>gyro_link</bodyName>\n      <topicName>imu/data</topicName>\n \
+  \     <serviceName>imu/is_calibrated</serviceName>\n      <gaussianNoise>2.89e-06</gaussianNoise>\n\
+  \      <xyzOffsets>0 0 0</xyzOffsets>\n      <rpyOffsets>0 0 0</rpyOffsets>\n  \
+  \  </plugin>\n  </gazebo>\n</robot>\n\n"
+rosdistro: 'kinetic
+
+  '
+roslaunch:
+  uris: {host_10_36_28_219__33359: 'http://10.36.28.219:33359/', host_10_36_28_219__34891: 'http://10.36.28.219:34891/',
+    host_10_36_28_219__35439: 'http://10.36.28.219:35439/', host_10_36_28_219__36167: 'http://10.36.28.219:36167/',
+    host_10_36_28_219__37471: 'http://10.36.28.219:37471/', host_10_36_28_219__39195: 'http://10.36.28.219:39195/',
+    host_10_36_28_219__40661: 'http://10.36.28.219:40661/', host_10_36_28_219__40721: 'http://10.36.28.219:40721/',
+    host_10_36_28_219__43845: 'http://10.36.28.219:43845/', host_10_36_28_219__43875: 'http://10.36.28.219:43875/',
+    host_10_36_28_219__44413: 'http://10.36.28.219:44413/', host_10_36_28_219__45171: 'http://10.36.28.219:45171/',
+    host_10_36_28_219__45413: 'http://10.36.28.219:45413/', host_ubiquityrobot_local__46447: 'http://ubiquityrobot.local:46447/'}
+rosversion: '1.12.16
+
+  '
+run_id: 6ea19822-d0dc-11e5-957c-050781fe2b44
+ydlidar_node: {angle_max: 180.0, angle_min: -180.0, auto_reconnect: true, baudrate: 115200,
+  frame_id: laser_frame, frequency: 7.0, ignore_array: '', low_exposure: false, port: /dev/ttyUSB1,
+  range_max: 16.0, range_min: 0.1, resolution_fixed: true, reversion: false, samp_rate: 9}
