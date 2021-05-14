@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(ca_driver)
 
 find_package(libcreate REQUIRED)
+set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 
 find_package(catkin REQUIRED COMPONENTS
   ca_msgs

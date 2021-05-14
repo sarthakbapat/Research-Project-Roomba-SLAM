@@ -1,8 +1,10 @@
 <launch>
+ <group ns="Robot1"> 
+  <param name="tf_prefix" value="Robot1_tf"/> 
   <node name="ydlidar_node"  pkg="ydlidar"  type="ydlidar_node" output="screen" respawn="false" >
-    <param name="port"         type="string" value="/dev/ydlidar"/>
+    <param name="port"         type="string" value="/dev/ttyUSB1"/>
     <param name="baudrate"     type="int"    value="115200"/>
-    <param name="frame_id"     type="string" value="laser_frame"/>
+    <param name="frame_id"     type="string" value="Robot1_tf/laser_frame"/>
     <param name="low_exposure"  type="bool"   value="false"/>
     <param name="resolution_fixed"    type="bool"   value="true"/>
     <param name="auto_reconnect"    type="bool"   value="true"/>
@@ -16,8 +18,9 @@
     <param name="frequency"    type="double" value="7"/>
   </node>
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser_frame"
-    args="0.0 0.0 0.0 0.0 0.0  0.0 /base_link /laser_frame 40" />
- <!-- <node pkg="tf" type="static_transform_publisher" name="base_link_to_map"
-    args="0.0 0.0 0.0 0.0 0.0  0.0 /base_link /map 40" />  -->
+    args="0.0 0.0 0.0 0.0 0.0  0.0 /Robot1_tf/base_link /Robot1_tf/laser_frame 40" />
 
+  <!-- <node pkg="tf" type="static_transform_publisher" name="base_link_to_map"
+    args="0.0 0.0 0.0 0.0 0.0  0.0 /base_link /map 40" /> -->
+ </group> 
 </launch>

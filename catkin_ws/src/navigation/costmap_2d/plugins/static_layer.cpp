@@ -172,7 +172,7 @@ void StaticLayer::incomingMap(const nav_msgs::OccupancyGridConstPtr& new_map)
   // resize costmap if size, resolution or origin do not match
   Costmap2D* master = layered_costmap_->getCostmap();
   if (!layered_costmap_->isRolling() &&
-      !layered_costmap_->isSizeLocked() &&
+  //    !layered_costmap_->isSizeLocked() &&
       (master->getSizeInCellsX() != size_x ||
        master->getSizeInCellsY() != size_y ||
        master->getResolution() != new_map->info.resolution ||

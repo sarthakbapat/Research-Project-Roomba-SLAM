@@ -1,22 +1,28 @@
 <launch>
-
    <master auto="start"/>
  <!-- Run the map server --> 
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find roomba_2dnav)/new_own_room.pgm 4000"/>
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find roomba_2dnav)/vslabrun7.yaml">
+     <!-- <param name="frame_id" value="/map" /> -->
+    </node>
+    <!-- <remap from="map" to="/map" /> -->
 
+ <group ns="Robot1">
+   <param name="tf_prefix" value="Robot1_tf" /> 
  <!--- Run AMCL --> 
     <include file="$(find amcl)/examples/amcl_omni.launch" />
-
+ 
    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <rosparam file="$(find roomba_2dnav)/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
     <rosparam file="$(find roomba_2dnav)/costmap_common_params.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find roomba_2dnav)/local_costmap_params.yaml" command="load" />
     <rosparam file="$(find roomba_2dnav)/global_costmap_params.yaml" command="load" /> 
     <!-- <rosparam file="$(find roomba_2dnav)/base_local_planner_params.yaml" command="load" /> -->
-    <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
-    <param name="base_global_planner" value="global_planner/GlobalPlanner" />
+    <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" /> 
+    <param name="base_global_planner" value="global_planner/GlobalPlanner" /> 
     <rosparam file="$(find roomba_2dnav)/dwa_local_planner_params.yaml" command="load" />
     <rosparam file="$(find roomba_2dnav)/global_planner_params.yaml" command="load" />
- </node>
-
+    
+  
+  </node>
+ </group> 
 </launch>
