@@ -1,7 +1,7 @@
 # This is a python script to navigate a robot to a goal location by sending the co-ordinates to the ROS Navigation stack.
 #!/usr/bin/env python
 
-import sys 
+import yaml
 import rospy
 import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
@@ -41,12 +41,16 @@ if __name__ == '__main__':
     try:
         rospy.init_node("navigation_goal", anonymous = False)
 
-        xGoal = (float)(sys.argv[1])
-        yGoal = (float)(sys.argv[2])
-        xOri = (float)(sys.argv[3])
-        yOri = (float)(sys.argv[4])
-        zOri = (float)(sys.argv[5])
-        wOri = (float)(sys.argv[6])
+        with open (r'coordinates.yaml') as file_descriptor:
+
+            goal_coordinates = yaml.load(file_descriptor, Loader=yaml.FullLoader)
+
+        xGoal = goal_coordinates["xGoal"]
+        yGoal = goal_coordinates["yGoal"]
+        xOri = goal_coordinates["xOri"]
+        yOri = goal_coordinates["yOri"]
+        zOri = goal_coordinates["zOri"]
+        wOri = goal_coordinates["wOri"]
 
         movebase_client(xGoal,yGoal,xOri,yOri,zOri,wOri)
 
