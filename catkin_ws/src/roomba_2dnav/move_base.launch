@@ -1,15 +1,14 @@
 <launch>
    <master auto="start"/>
- <!-- Run the map server --> 
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find roomba_2dnav)/vslabrun7.yaml">
-     <!-- <param name="frame_id" value="/map" /> -->
-    </node>
-    <!-- <remap from="map" to="/map" /> -->
+
+   <!-- Run the map server --> 
+   <node name="map_server" pkg="map_server" type="map_server" args="$(find roomba_2dnav)/vslabFinalMap.yaml">
+   </node>
 
  <group ns="Robot1">
    <param name="tf_prefix" value="Robot1_tf" /> 
- <!--- Run AMCL --> 
-    <include file="$(find amcl)/examples/amcl_omni.launch" />
+   <!--- Run AMCL --> 
+   <include file="$(find amcl)/examples/amcl_omni.launch" />
  
    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <rosparam file="$(find roomba_2dnav)/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
