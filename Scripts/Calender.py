@@ -81,6 +81,10 @@ if __name__ == '__main__':
                 meetingDate = datetime.strptime(calender_data, '%Y/%m/%d %H:%M:%S').date()
                 cleaningTime = (meetingDateTime - fourty_fiveMins).time()
 
+                print ("cleaning time: ", cleaningTime)
+                print ("current time: ", currentTime)
+                print ("Meeting date time: ", meetingDateTime)
+
                 if (roomState == roomFree or roomState == roomFreeLongTerm):
                     if (currentTime == cleaningTime):
                         try:
@@ -88,7 +92,7 @@ if __name__ == '__main__':
 
                             with open (r'coordinates.yaml') as file_descriptor:
 
-                                goal_coordinates = yaml.load(file_descriptor, Loader=load_all)
+                                goal_coordinates = yaml.load(file_descriptor)
 
                             xGoal = goal_coordinates["xGoal"]
                             yGoal = goal_coordinates["yGoal"]
