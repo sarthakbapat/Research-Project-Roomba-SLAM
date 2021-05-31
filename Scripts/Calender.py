@@ -4,7 +4,7 @@ import time
 import json
 from datetime import datetime, date, timedelta
 
-from yaml import load_all
+import yaml
 import goal_navigate as navi
 
 topicEntries = "calendar/fhg.iao.vslab@gmail.com/entriesToday"
@@ -75,10 +75,16 @@ if __name__ == '__main__':
             if messageReceivedFlag == True:
                 currentTime = datetime.now().time()
                 currentDate = date.today()
-                fourty_fiveMins = timedelta(minutes=45)
-                calender_data = calender_entries['entries'][0]['entry'][0]['begin']
-                meetingDateTime = datetime.strptime(calender_data, '%Y/%m/%d %H:%M:%S')
-                meetingDate = datetime.strptime(calender_data, '%Y/%m/%d %H:%M:%S').date()
+                fourty_fiveMins = timedelta(hours=1,minutes=30)
+                calender_data = calender_entries['entries'][0]['entry']
+
+                for item in range(len(calender_data)):
+                    meetingData = calender_data[item]['begin']
+                    meetingDateTime = datetime.strptime(meetingData, '%Y/%m/%d %H:%M:%S')
+                    meetingTime = datetime.strptime(meetingData, '%Y/%m/%d %H:%M:%S').time()
+                    if currentTime < meetingTime:
+                        break
+
                 cleaningTime = (meetingDateTime - fourty_fiveMins).time()
 
                 print ("cleaning time: ", cleaningTime)
@@ -86,7 +92,9 @@ if __name__ == '__main__':
                 print ("Meeting date time: ", meetingDateTime)
 
                 if (roomState == roomFree or roomState == roomFreeLongTerm):
-                    if (currentTime == cleaningTime):
+                    print ("Checked room state")
+                    if (currentTime >= cleaningTime):
+                        print ("---- Cleaning will start now -------")
                         try:
                             rospy.init_node("navigation_goal", anonymous = False)
 
@@ -112,6 +120,6 @@ if __name__ == '__main__':
                 messageReceivedFlag = False
             time.sleep(3)
 
-        print("Successfully executed try block")
+        print("Should never reach here .....")
     except:
         print ("An error occured!")
