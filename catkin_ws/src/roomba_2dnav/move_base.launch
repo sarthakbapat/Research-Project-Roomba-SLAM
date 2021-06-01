@@ -2,9 +2,7 @@
    <master auto="start"/>
  <!-- Run the map server --> 
     <node name="map_server" pkg="map_server" type="map_server" args="$(find roomba_2dnav)/vslabrun7.yaml">
-     <!-- <param name="frame_id" value="/map" /> -->
     </node>
-    <!-- <remap from="map" to="/map" /> -->
 
  <group ns="Robot1">
    <param name="tf_prefix" value="Robot1_tf" /> 
