@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-import yaml
 import rospy
 import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
@@ -8,6 +7,9 @@ from actionlib_msgs.msg import *
 from geometry_msgs.msg import Point   
 
 class NavigateToGoal:
+    """ This is a class that encorporates the functionality to navigate the robot to its
+    goal location by sending coordinates to the ROS move_base server.
+    """    
 
     def __init__(self, xGoal,yGoal,xOri,yOri,zOri,wOri):
         self.xGoal = xGoal
@@ -18,6 +20,9 @@ class NavigateToGoal:
         self.wOri = wOri
         
     def movebase_client(self):
+        """ This method creates a SimpleActionClient instance and associates with it the goal 
+        coordinates for the robots navigation. It sends goal and notifies the status.
+        """        
         #Create a actionlib client object.
         client = actionlib.SimpleActionClient('Robot1/move_base', MoveBaseAction)
 
@@ -29,18 +34,19 @@ class NavigateToGoal:
         goal.target_pose.header.frame_id = "map"
         goal.target_pose.header.stamp = rospy.Time.now()
 
+        #Associate goal location to move_base server.
         goal.target_pose.pose.position = Point(self.xGoal, self.yGoal, 0)
         goal.target_pose.pose.orientation.x = self.xOri
         goal.target_pose.pose.orientation.y = self.yOri
         goal.target_pose.pose.orientation.z = self.zOri
         goal.target_pose.pose.orientation.w = self.wOri
 
-        rospy.loginfo ("Sending goal location")
+        rospy.loginfo ("Sending goal location to Roomba1")
         client.send_goal(goal)
 
         client.wait_for_result()
 
         if (client.get_state() == GoalStatus.SUCCEEDED):
-            rospy.loginfo("Goal Reached !")
+            rospy.loginfo("Roomba1 Goal Reached !")
         else:
-            rospy.loginfo("Failed to reach the destination")
+            rospy.loginfo("Roomba1 Failed to reach the destination")
