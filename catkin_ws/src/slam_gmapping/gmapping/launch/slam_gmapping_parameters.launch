@@ -1,0 +1,12 @@
+<launch>
+
+	<param name="/slam_gmapping/angularUpdate" type="double" value="0.1" />
+	<param name="/slam_gmapping/linearUpdate" type="double" value="0.1" />
+	<param name="/slam_gmapping/lskip" type="int" value="10" />
+	<param name="/slam_gmapping/xmax" type="double" value="10" />
+	<param name="/slam_gmapping/xmin" type="double" value="-10" />
+	<param name="/slam_gmapping/ymax" type="double" value="10" />
+	<param name="/slam_gmapping/ymin" type="double" value="-10" />
+	 
+
+</launch>
