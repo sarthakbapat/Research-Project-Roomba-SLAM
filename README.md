@@ -1,4 +1,5 @@
-#iRobot Roomba SLAM, Swarming and Scheduling.
+iRobot Roomba SLAM, Swarming and Scheduling.
+---------------------------------------------
 
 The project consists of creation of a Robotic swarm system of two robots using iRobot's Roomba (Vaccum cleaning robot). The idea is to run a ROS master on one robot and launch both the robots in different namespaces so that the recognition of each individual robot is easy. We are not working with ROS2 and hence no use case of multiple ROS masters here.
 
